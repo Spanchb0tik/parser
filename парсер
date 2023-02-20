@@ -1,0 +1,21 @@
+import requests
+from bs4 import BeautifulSoup
+url = 'https://ru.wikipedia.org/wiki/%D0%9E%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0'#ссылка на нужный нам сайт
+# Получаем весь сайт
+response = requests.get(url)
+html = response.text
+soup = BeautifulSoup(html, 'html.parser')
+
+# Убрать весь CSS
+for tag in soup.find_all('style'):
+    tag.decompose()
+
+#Убрать весь javascripts
+for tag in soup.find_all('script'):
+    tag.decompose()
+
+print(''.join(soup.get_text()))
+
+#Если надо записать в файл
+#my_file = open("URL.text", "a+")
+#my_file.write((''.join(soup.get_text())))
